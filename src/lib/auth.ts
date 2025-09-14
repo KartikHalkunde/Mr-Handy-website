@@ -1,8 +1,11 @@
-import { compare } from 'bcryptjs';
-import { NextAuthOptions } from 'next-auth';
-import CredentialsProvider from 'next-auth/providers/credentials';
-import { PrismaAdapter } from '@auth/prisma-adapter';
+import bcrypt from 'bcryptjs';
+import jwt from 'jsonwebtoken';
+import { NextRequest, NextResponse } from 'next/server';
+import { cookies } from 'next/headers';
 import { prisma } from './prisma';
+
+const JWT_SECRET = process.env.NEXTAUTH_SECRET || 'fallback-secret';
+const COOKIE_NAME = 'auth-token';
 
 export interface User {
   id: string;

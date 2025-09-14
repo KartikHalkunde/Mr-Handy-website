@@ -49,7 +49,7 @@ export function ServicePage({ serviceType, title, description }: ServicePageProp
         <h1 className="text-4xl font-bold mb-4">{title}</h1>
         <p className="text-xl mb-8">Please sign in to find and connect with {serviceType}s in your area.</p>
         <Link 
-          href="/auth" 
+          href={`/auth?callbackUrl=${encodeURIComponent(`/${serviceType}`)}`}
           className="inline-flex items-center gap-2 px-6 py-3.5 rounded-2xl bg-white/10 hover:bg-white/20 backdrop-blur-sm border border-white/20 text-white transition-all"
         >
           Sign In to Continue

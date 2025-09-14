@@ -36,6 +36,7 @@ export function Header() {
         <nav className="hidden sm:flex items-center gap-6 text-sm font-semibold justify-self-center">
           <Link href="/about" className="hover:opacity-80 transition-opacity">{t("nav_about")}</Link>
           <Link href="/contact" className="hover:opacity-80 transition-opacity">{t("nav_contact")}</Link>
+          <Link href="/join" className="hover:opacity-80 transition-opacity">{t("nav_join")}</Link>
         </nav>
         <div className="flex items-center gap-3 justify-self-end">
           <LanguageSwitcher />
@@ -76,7 +77,7 @@ export function Header() {
           ) : (
             <a
               href="/auth"
-              className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-white/10 hover:bg-white/20 backdrop-blur-sm border border-white/20 text-white transition-all"
+              className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-white hover:bg-gray-100 backdrop-blur-sm border border-white/20 text-black transition-all"
             >
               <User className="h-4 w-4" />
               {t('signIn')}

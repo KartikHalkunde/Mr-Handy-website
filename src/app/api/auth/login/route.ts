@@ -1,9 +1,10 @@
-import { NextRequest, NextResponse } from 'next/server';
+import { NextResponse } from 'next/server';
 import { prisma } from '@/lib/prisma';
-import { comparePassword, generateToken, setAuthCookie } from '@/lib/auth';
+import { compare } from 'bcryptjs';
 import { validateLoginForm } from '@/lib/validation';
+import { signIn } from '@/auth';
 
-export async function POST(request: NextRequest) {
+export async function POST(request: Request) {
   try {
     const body = await request.json();
     const { email, password } = body;
@@ -39,7 +40,7 @@ export async function POST(request: NextRequest) {
     }
 
     // Compare password
-    const isPasswordValid = await comparePassword(password, user.password);
+    const isPasswordValid = await compare(password, user.password);
 
     if (!isPasswordValid) {
       return NextResponse.json(
@@ -52,14 +53,24 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // Generate token
-    const token = generateToken({
-      userId: user.id,
+    // Sign in the user using NextAuth
+    const signInResult = await signIn('credentials', {
       email: user.email,
+      password: password,
+      redirect: false,
     });
 
-    // Create response
-    const response = NextResponse.json({
+    if (signInResult?.error) {
+      return NextResponse.json(
+        { 
+          success: false, 
+          message: 'Authentication failed' 
+        },
+        { status: 500 }
+      );
+    }
+
+    return NextResponse.json({
       success: true,
       message: 'Login successful',
       user: {
@@ -68,11 +79,6 @@ export async function POST(request: NextRequest) {
         email: user.email,
       },
     });
-
-    // Set cookie
-    setAuthCookie(response, token);
-
-    return response;
 
   } catch (error) {
     console.error('Login error:', error);
