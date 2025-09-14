@@ -6,6 +6,7 @@ import { Footer } from "@/components/Footer";
 import { PageTransition } from "@/components/PageTransition";
 import { LanguageProvider } from "@/components/LanguageProvider";
 import { Preloader } from "@/components/Preloader";
+import { AuthProvider } from "@/components/AuthProvider";
 
 const poppins = Poppins({
   variable: "--font-poppins",
@@ -27,15 +28,15 @@ export default function RootLayout({
     <html lang="en">
       <body className={`${poppins.variable} antialiased`}>
         <Preloader />
-        <LanguageProvider>
-          <Header />
-          <main className="mx-auto max-w-[95%] relative">
+        <AuthProvider>
+          <LanguageProvider>
+            <Header />
             <PageTransition>
               {children}
             </PageTransition>
-          </main>
-          <Footer />
-        </LanguageProvider>
+            <Footer />
+          </LanguageProvider>
+        </AuthProvider>
       </body>
     </html>
   );
