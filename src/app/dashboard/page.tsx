@@ -3,8 +3,9 @@
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { motion } from 'framer-motion';
-import { LogOut, User, Calendar, Settings, Wrench } from 'lucide-react';
+import { LogOut, User, Calendar, Settings, Wrench, Edit, Save, X } from 'lucide-react';
 import { AuthButton } from '@/components/auth/AuthButton';
+import { useI18n } from '@/components/LanguageProvider';
 
 interface User {
   id: string;
@@ -15,9 +16,17 @@ interface User {
 
 export default function DashboardPage() {
   const router = useRouter();
+  const { t } = useI18n();
   const [user, setUser] = useState<User | null>(null);
   const [loading, setLoading] = useState(true);
   const [logoutLoading, setLogoutLoading] = useState(false);
+  const [isEditing, setIsEditing] = useState(false);
+  const [editForm, setEditForm] = useState({
+    name: '',
+    email: ''
+  });
+  const [updateLoading, setUpdateLoading] = useState(false);
+  const [message, setMessage] = useState('');
 
   useEffect(() => {
     // Check if user is authenticated
@@ -28,6 +37,10 @@ export default function DashboardPage() {
 
         if (data.success) {
           setUser(data.user);
+          setEditForm({
+            name: data.user.name,
+            email: data.user.email
+          });
         } else {
           // Redirect to login if not authenticated
           router.push('/login');
@@ -59,6 +72,59 @@ export default function DashboardPage() {
       console.error('Logout failed:', error);
     } finally {
       setLogoutLoading(false);
+    }
+  };
+
+  const handleEditToggle = () => {
+    setIsEditing(!isEditing);
+    if (!isEditing) {
+      setEditForm({
+        name: user?.name || '',
+        email: user?.email || ''
+      });
+    }
+    setMessage('');
+  };
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    setEditForm(prev => ({
+      ...prev,
+      [name]: value
+    }));
+  };
+
+  const handleUpdateProfile = async () => {
+    if (!user) return;
+    
+    setUpdateLoading(true);
+    setMessage('');
+
+    try {
+      const response = await fetch('/api/auth/update-profile', {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          name: editForm.name,
+          email: editForm.email
+        }),
+      });
+
+      const data = await response.json();
+
+      if (response.ok) {
+        setUser(prev => prev ? { ...prev, ...editForm } : null);
+        setMessage('Profile updated successfully!');
+        setIsEditing(false);
+      } else {
+        setMessage(data.error || 'Failed to update profile');
+      }
+    } catch (error) {
+      setMessage('Network error. Please try again.');
+    } finally {
+      setUpdateLoading(false);
     }
   };
 
@@ -94,7 +160,7 @@ export default function DashboardPage() {
                 className="px-4 py-2"
               >
                 <LogOut className="w-4 h-4 mr-2" />
-                Logout
+                {t("dashboard_logout")}
               </AuthButton>
             </div>
           </div>
@@ -110,10 +176,10 @@ export default function DashboardPage() {
           className="mb-8"
         >
           <h2 className="text-3xl font-bold text-white mb-2">
-            Welcome back, {user.name}!
+            {t("dashboard_welcome")}, {user.name}!
           </h2>
           <p className="text-gray-300">
-            Manage your home maintenance services and bookings
+            {t("dashboard_subtitle")}
           </p>
         </motion.div>
 
@@ -130,8 +196,8 @@ export default function DashboardPage() {
                 <User className="w-6 h-6 text-blue-600" />
               </div>
               <div className="ml-4">
-                <p className="text-sm font-medium text-gray-400">Profile</p>
-                <p className="text-2xl font-semibold text-white">Complete</p>
+                <p className="text-sm font-medium text-gray-400">{t("dashboard_profile")}</p>
+                <p className="text-2xl font-semibold text-white">{t("dashboard_complete")}</p>
               </div>
             </div>
           </motion.div>
@@ -147,7 +213,7 @@ export default function DashboardPage() {
                 <Calendar className="w-6 h-6 text-green-600" />
               </div>
               <div className="ml-4">
-                <p className="text-sm font-medium text-gray-400">Bookings</p>
+                <p className="text-sm font-medium text-gray-400">{t("dashboard_bookings")}</p>
                 <p className="text-2xl font-semibold text-white">0</p>
               </div>
             </div>
@@ -164,7 +230,7 @@ export default function DashboardPage() {
                 <Wrench className="w-6 h-6 text-yellow-600" />
               </div>
               <div className="ml-4">
-                <p className="text-sm font-medium text-gray-400">Services</p>
+                <p className="text-sm font-medium text-gray-400">{t("dashboard_services")}</p>
                 <p className="text-2xl font-semibold text-white">3</p>
               </div>
             </div>
@@ -181,8 +247,8 @@ export default function DashboardPage() {
                 <Settings className="w-6 h-6 text-purple-600" />
               </div>
               <div className="ml-4">
-                <p className="text-sm font-medium text-gray-400">Settings</p>
-                <p className="text-2xl font-semibold text-white">Active</p>
+                <p className="text-sm font-medium text-gray-400">{t("dashboard_settings")}</p>
+                <p className="text-2xl font-semibold text-white">{t("dashboard_active")}</p>
               </div>
             </div>
           </motion.div>
@@ -198,7 +264,7 @@ export default function DashboardPage() {
             className="bg-gray-900 rounded-lg shadow p-6 border border-gray-700"
           >
             <h3 className="text-lg font-semibold text-white mb-4">
-              Quick Actions
+              {t("dashboard_quick_actions")}
             </h3>
             <div className="space-y-3">
               <AuthButton
@@ -207,7 +273,7 @@ export default function DashboardPage() {
                 className="w-full justify-center"
               >
                 <Wrench className="w-4 h-4 mr-2" />
-                Book a Service
+                {t("dashboard_book_service")}
               </AuthButton>
               <AuthButton
                 type="button"
@@ -215,7 +281,7 @@ export default function DashboardPage() {
                 className="w-full justify-center"
               >
                 <Calendar className="w-4 h-4 mr-2" />
-                View Bookings
+                {t("dashboard_view_bookings")}
               </AuthButton>
             </div>
           </motion.div>
@@ -227,24 +293,82 @@ export default function DashboardPage() {
             transition={{ duration: 0.5, delay: 0.6 }}
             className="bg-gray-900 rounded-lg shadow p-6 border border-gray-700"
           >
-            <h3 className="text-lg font-semibold text-white mb-4">
-              Account Information
-            </h3>
-            <div className="space-y-3">
+            <div className="flex justify-between items-center mb-4">
+              <h3 className="text-lg font-semibold text-white">
+                {t("dashboard_account_info")}
+              </h3>
+              <button
+                onClick={handleEditToggle}
+                className="flex items-center gap-2 px-3 py-1.5 text-sm bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition-colors"
+              >
+                {isEditing ? <X className="w-4 h-4" /> : <Edit className="w-4 h-4" />}
+                {isEditing ? t("dashboard_cancel") : t("dashboard_edit")}
+              </button>
+            </div>
+
+            {/* Message Display */}
+            {message && (
+              <motion.div
+                initial={{ opacity: 0, y: -10 }}
+                animate={{ opacity: 1, y: 0 }}
+                className={`mb-4 p-3 rounded-lg ${
+                  message.includes('success') 
+                    ? 'bg-green-500/20 border border-green-500/30 text-green-300' 
+                    : 'bg-red-500/20 border border-red-500/30 text-red-300'
+                }`}
+              >
+                {message}
+              </motion.div>
+            )}
+
+            <div className="space-y-4">
               <div>
-                <label className="text-sm font-medium text-gray-400">Name</label>
-                <p className="text-white">{user.name}</p>
+                <label className="text-sm font-medium text-gray-400">{t("contact_full_name")}</label>
+                {isEditing ? (
+                  <input
+                    type="text"
+                    name="name"
+                    value={editForm.name}
+                    onChange={handleInputChange}
+                    className="w-full mt-1 px-3 py-2 bg-gray-800 border border-gray-600 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  />
+                ) : (
+                  <p className="text-white">{user.name}</p>
+                )}
               </div>
               <div>
-                <label className="text-sm font-medium text-gray-400">Email</label>
-                <p className="text-white">{user.email}</p>
+                <label className="text-sm font-medium text-gray-400">{t("contact_email_address")}</label>
+                {isEditing ? (
+                  <input
+                    type="email"
+                    name="email"
+                    value={editForm.email}
+                    onChange={handleInputChange}
+                    className="w-full mt-1 px-3 py-2 bg-gray-800 border border-gray-600 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  />
+                ) : (
+                  <p className="text-white">{user.email}</p>
+                )}
               </div>
               <div>
-                <label className="text-sm font-medium text-gray-400">Member Since</label>
+                <label className="text-sm font-medium text-gray-400">{t("dashboard_member_since")}</label>
                 <p className="text-white">
                   {new Date(user.createdAt).toLocaleDateString()}
                 </p>
               </div>
+              
+              {isEditing && (
+                <div className="pt-4">
+                  <button
+                    onClick={handleUpdateProfile}
+                    disabled={updateLoading}
+                    className="flex items-center gap-2 px-4 py-2 bg-green-600 hover:bg-green-700 disabled:bg-green-600/50 text-white rounded-lg transition-colors"
+                  >
+                    <Save className="w-4 h-4" />
+                    {updateLoading ? t("dashboard_saving") : t("dashboard_save_changes")}
+                  </button>
+                </div>
+              )}
             </div>
           </motion.div>
         </div>

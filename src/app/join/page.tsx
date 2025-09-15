@@ -17,6 +17,9 @@ export default function JoinPage() {
     area: "",
     city: ""
   });
+  const [loading, setLoading] = useState(false);
+  const [message, setMessage] = useState("");
+  const [isSuccess, setIsSuccess] = useState(false);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
@@ -26,10 +29,48 @@ export default function JoinPage() {
     }));
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    // Handle form submission here
-    console.log("Form submitted:", formData);
+    setLoading(true);
+    setMessage("");
+
+    try {
+      const response = await fetch('/api/auth/provider-signup', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          name: `${formData.firstName} ${formData.lastName}`,
+          email: formData.email || `${formData.phone}@mrhandy.local`,
+          password: `temp_${formData.phone}_${Date.now()}`,
+          phone: formData.phone,
+          age: parseInt(formData.age),
+          experience: parseInt(formData.experience),
+          serviceType: formData.service,
+          location: formData.area,
+          city: formData.city,
+          address: `${formData.area}, ${formData.city}`,
+          bio: `Professional ${formData.service} with ${formData.experience} years of experience`
+        }),
+      });
+
+      const data = await response.json();
+
+      if (response.ok) {
+        setMessage("Registration successful! We'll contact you soon.");
+        setIsSuccess(true);
+        handleReset();
+      } else {
+        setMessage(data.error || "Registration failed. Please try again.");
+        setIsSuccess(false);
+      }
+    } catch (error) {
+      setMessage("Network error. Please check your connection and try again.");
+      setIsSuccess(false);
+    } finally {
+      setLoading(false);
+    }
   };
 
   const handleReset = () => {
@@ -99,6 +140,21 @@ export default function JoinPage() {
                 transition={{ duration: 0.6 }}
               >
                 <h1 className="text-3xl font-bold text-white mb-8">{t("join_title")}</h1>
+                
+                {/* Message Display */}
+                {message && (
+                  <motion.div
+                    initial={{ opacity: 0, y: -10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    className={`mb-6 p-4 rounded-2xl ${
+                      isSuccess 
+                        ? 'bg-green-500/20 border border-green-500/30 text-green-300' 
+                        : 'bg-red-500/20 border border-red-500/30 text-red-300'
+                    }`}
+                  >
+                    {message}
+                  </motion.div>
+                )}
                 
                 <form onSubmit={handleSubmit} className="space-y-4">
                   {/* Personal Information Section */}
@@ -269,13 +325,16 @@ export default function JoinPage() {
                   >
                     <motion.button
                       type="submit"
+                      disabled={loading}
                       className="flex-1 relative group"
-                      whileHover={{ scale: 1.02 }}
-                      whileTap={{ scale: 0.98 }}
+                      whileHover={{ scale: loading ? 1 : 1.02 }}
+                      whileTap={{ scale: loading ? 1 : 0.98 }}
                     >
                       <div className="absolute -inset-1 bg-gradient-to-r from-green-500 via-green-600 to-green-700 rounded-2xl blur-sm opacity-0 group-hover:opacity-50 transition duration-300"></div>
                       <div className="relative px-6 py-3.5 bg-green-600/20 rounded-2xl leading-none flex items-center justify-center backdrop-blur-xl border border-green-500/30">
-                        <span className="text-white text-base font-medium">SUBMIT</span>
+                        <span className="text-white text-base font-medium">
+                          {loading ? "SUBMITTING..." : "SUBMIT"}
+                        </span>
                       </div>
                     </motion.button>
                     

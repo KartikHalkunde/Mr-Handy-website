@@ -70,7 +70,7 @@ export default function AboutPage() {
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.1 }}
               viewport={{ once: true }}
-              className="group relative bg-gradient-to-br from-amber-900/80 to-black/90 backdrop-blur-sm rounded-3xl p-6 border border-amber-800/50 hover:bg-[#FFC107] hover:border-[#FFC107] hover:shadow-2xl hover:shadow-[#FFC107]/20 transition-all duration-500"
+              className="group relative bg-black rounded-3xl p-6 border border-gray-700 hover:bg-[#FFC107] hover:border-[#FFC107] hover:shadow-2xl hover:shadow-[#FFC107]/20 transition-all duration-500"
             >
               <div className="relative overflow-hidden rounded-2xl mb-4">
                 <Image
@@ -96,7 +96,7 @@ export default function AboutPage() {
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.2 }}
               viewport={{ once: true }}
-              className="group relative bg-gradient-to-br from-amber-900/80 to-black/90 backdrop-blur-sm rounded-3xl p-6 border border-amber-800/50 hover:bg-[#FFC107] hover:border-[#FFC107] hover:shadow-2xl hover:shadow-[#FFC107]/20 transition-all duration-500"
+              className="group relative bg-black rounded-3xl p-6 border border-gray-700 hover:bg-[#FFC107] hover:border-[#FFC107] hover:shadow-2xl hover:shadow-[#FFC107]/20 transition-all duration-500"
             >
               <div className="relative overflow-hidden rounded-2xl mb-4">
                 <Image
@@ -122,7 +122,7 @@ export default function AboutPage() {
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.3 }}
               viewport={{ once: true }}
-              className="group relative bg-gradient-to-br from-amber-900/80 to-black/90 backdrop-blur-sm rounded-3xl p-6 border border-amber-800/50 hover:bg-[#FFC107] hover:border-[#FFC107] hover:shadow-2xl hover:shadow-[#FFC107]/20 transition-all duration-500"
+              className="group relative bg-black rounded-3xl p-6 border border-gray-700 hover:bg-[#FFC107] hover:border-[#FFC107] hover:shadow-2xl hover:shadow-[#FFC107]/20 transition-all duration-500"
             >
               <div className="relative overflow-hidden rounded-2xl mb-4">
                 <Image

@@ -68,9 +68,9 @@ export default function ContactPage() {
               className="space-y-8"
             >
               <div>
-                <h2 className="text-3xl font-bold text-white mb-8">Get in Touch</h2>
+                <h2 className="text-3xl font-bold text-white mb-8">{t("contact_get_in_touch")}</h2>
                 <p className="text-gray-300 text-lg leading-relaxed mb-8">
-                  Ready to connect with our handymen? We're here to help you find the perfect professional for your home maintenance needs.
+                  {t("contact_description")}
                 </p>
               </div>
 
@@ -81,16 +81,16 @@ export default function ContactPage() {
                   whileInView={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.6, delay: 0.1 }}
                   viewport={{ once: true }}
-                  className="bg-gradient-to-br from-amber-900/20 to-black/40 backdrop-blur-sm rounded-2xl p-6 border border-amber-800/30"
+                  className="bg-black rounded-2xl p-6 border border-gray-700"
                 >
                   <div className="flex items-start space-x-4">
                     <div className="bg-[#FFC107] p-3 rounded-xl">
                       <Phone className="w-6 h-6 text-black" />
                     </div>
                     <div>
-                      <h3 className="text-xl font-semibold text-white mb-2">Phone</h3>
+                      <h3 className="text-xl font-semibold text-white mb-2">{t("contact_phone")}</h3>
                       <p className="text-gray-300">+91 80107 87170</p>
-                      <p className="text-sm text-gray-400">Available 24/7</p>
+                      <p className="text-sm text-gray-400">{t("contact_available_24_7")}</p>
                     </div>
                   </div>
                 </motion.div>
@@ -100,16 +100,16 @@ export default function ContactPage() {
                   whileInView={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.6, delay: 0.2 }}
                   viewport={{ once: true }}
-                  className="bg-gradient-to-br from-amber-900/20 to-black/40 backdrop-blur-sm rounded-2xl p-6 border border-amber-800/30"
+                  className="bg-black rounded-2xl p-6 border border-gray-700"
                 >
                   <div className="flex items-start space-x-4">
                     <div className="bg-[#FFC107] p-3 rounded-xl">
                       <Mail className="w-6 h-6 text-black" />
                     </div>
                     <div>
-                      <h3 className="text-xl font-semibold text-white mb-2">Email</h3>
+                      <h3 className="text-xl font-semibold text-white mb-2">{t("contact_email")}</h3>
                       <p className="text-gray-300">mrhandy.team@gmail.com</p>
-                      <p className="text-sm text-gray-400">We'll respond within 24 hours</p>
+                      <p className="text-sm text-gray-400">{t("contact_response_time")}</p>
                     </div>
                   </div>
                 </motion.div>
@@ -119,38 +119,20 @@ export default function ContactPage() {
                   whileInView={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.6, delay: 0.3 }}
                   viewport={{ once: true }}
-                  className="bg-gradient-to-br from-amber-900/20 to-black/40 backdrop-blur-sm rounded-2xl p-6 border border-amber-800/30"
+                  className="bg-black rounded-2xl p-6 border border-gray-700"
                 >
                   <div className="flex items-start space-x-4">
                     <div className="bg-[#FFC107] p-3 rounded-xl">
                       <MapPin className="w-6 h-6 text-black" />
                     </div>
                     <div>
-                      <h3 className="text-xl font-semibold text-white mb-2">Service Areas</h3>
+                      <h3 className="text-xl font-semibold text-white mb-2">{t("contact_service_areas")}</h3>
                       <p className="text-gray-300">Mumbai, Delhi, Bangalore</p>
-                      <p className="text-sm text-gray-400">Expanding nationwide</p>
+                      <p className="text-sm text-gray-400">{t("contact_expanding_nationwide")}</p>
                     </div>
                   </div>
                 </motion.div>
 
-                <motion.div
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.6, delay: 0.4 }}
-                  viewport={{ once: true }}
-                  className="bg-gradient-to-br from-amber-900/20 to-black/40 backdrop-blur-sm rounded-2xl p-6 border border-amber-800/30"
-                >
-                  <div className="flex items-start space-x-4">
-                    <div className="bg-[#FFC107] p-3 rounded-xl">
-                      <Clock className="w-6 h-6 text-black" />
-                    </div>
-                    <div>
-                      <h3 className="text-xl font-semibold text-white mb-2">Business Hours</h3>
-                      <p className="text-gray-300">24/7 Emergency Service</p>
-                      <p className="text-sm text-gray-400">Regular bookings: 8 AM - 8 PM</p>
-                    </div>
-                  </div>
-                </motion.div>
               </div>
             </motion.div>
 
@@ -160,9 +142,9 @@ export default function ContactPage() {
               whileInView={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.8 }}
               viewport={{ once: true }}
-              className="bg-gradient-to-br from-amber-900/20 to-black/40 backdrop-blur-sm rounded-3xl p-8 border border-amber-800/30"
+              className="bg-black rounded-3xl p-8 border border-gray-700"
             >
-              <h2 className="text-3xl font-bold text-white mb-6">Send us a Message</h2>
+              <h2 className="text-3xl font-bold text-white mb-6">{t("contact_send_message")}</h2>
               
               {isSubmitted ? (
                 <motion.div
@@ -178,7 +160,7 @@ export default function ContactPage() {
                 <form onSubmit={handleSubmit} className="space-y-6">
                   <div className="grid md:grid-cols-2 gap-6">
                     <div>
-                      <label className="block text-sm font-medium text-gray-300 mb-2">Full Name *</label>
+                      <label className="block text-sm font-medium text-gray-300 mb-2">{t("contact_full_name")} *</label>
                       <input
                         type="text"
                         name="name"
@@ -190,7 +172,7 @@ export default function ContactPage() {
                       />
                     </div>
                     <div>
-                      <label className="block text-sm font-medium text-gray-300 mb-2">Email Address *</label>
+                      <label className="block text-sm font-medium text-gray-300 mb-2">{t("contact_email_address")} *</label>
                       <input
                         type="email"
                         name="email"
@@ -205,7 +187,7 @@ export default function ContactPage() {
 
                   <div className="grid md:grid-cols-2 gap-6">
                     <div>
-                      <label className="block text-sm font-medium text-gray-300 mb-2">Phone Number</label>
+                      <label className="block text-sm font-medium text-gray-300 mb-2">{t("contact_phone_number")}</label>
                       <input
                         type="tel"
                         name="phone"
@@ -216,7 +198,7 @@ export default function ContactPage() {
                       />
                     </div>
                     <div>
-                      <label className="block text-sm font-medium text-gray-300 mb-2">Subject *</label>
+                      <label className="block text-sm font-medium text-gray-300 mb-2">{t("contact_subject")} *</label>
                       <select
                         name="subject"
                         value={formData.subject}
@@ -235,7 +217,7 @@ export default function ContactPage() {
                   </div>
 
                   <div>
-                    <label className="block text-sm font-medium text-gray-300 mb-2">Message *</label>
+                    <label className="block text-sm font-medium text-gray-300 mb-2">{t("contact_message")} *</label>
                     <textarea
                       name="message"
                       value={formData.message}
@@ -254,7 +236,7 @@ export default function ContactPage() {
                     className="w-full bg-[#FFC107] text-black font-semibold py-4 px-8 rounded-xl hover:bg-[#FFC107]/90 transition-colors duration-300 flex items-center justify-center space-x-2"
                   >
                     <Send className="w-5 h-5" />
-                    <span>Send Message</span>
+                    <span>{t("contact_send")}</span>
                   </motion.button>
                 </form>
               )}
@@ -273,27 +255,27 @@ export default function ContactPage() {
             viewport={{ once: true }}
             className="text-center mb-12"
           >
-            <h2 className="text-4xl font-bold text-white mb-4">Frequently Asked Questions</h2>
-            <p className="text-gray-300 text-lg">Quick answers to common questions</p>
+            <h2 className="text-4xl font-bold text-white mb-4">{t("contact_faq_title")}</h2>
+            <p className="text-gray-300 text-lg">{t("contact_faq_subtitle")}</p>
           </motion.div>
 
           <div className="grid md:grid-cols-2 gap-8">
             {[
               {
-                question: "How quickly can I get a handyman?",
-                answer: "We can connect you with a handyman within 2-4 hours for urgent repairs, or schedule appointments for the next day."
+                question: t("contact_faq_1_q"),
+                answer: t("contact_faq_1_a")
               },
               {
-                question: "Are your handymen certified?",
-                answer: "Yes, all our handymen are thoroughly vetted, certified professionals with years of experience in their respective fields."
+                question: t("contact_faq_2_q"),
+                answer: t("contact_faq_2_a")
               },
               {
-                question: "What services do you offer?",
-                answer: "We provide carpentry, plumbing, electrical work, HVAC maintenance, and general home repair services."
+                question: t("contact_faq_3_q"),
+                answer: t("contact_faq_3_a")
               },
               {
-                question: "Do you provide emergency services?",
-                answer: "Yes, we offer 24/7 emergency services for urgent repairs like water leaks, electrical issues, and security problems."
+                question: t("contact_faq_4_q"),
+                answer: t("contact_faq_4_a")
               }
             ].map((faq, index) => (
               <motion.div
@@ -302,7 +284,7 @@ export default function ContactPage() {
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, delay: index * 0.1 }}
                 viewport={{ once: true }}
-                className="bg-gradient-to-br from-amber-900/20 to-black/40 backdrop-blur-sm rounded-2xl p-6 border border-amber-800/30"
+                className="bg-black rounded-2xl p-6 border border-gray-700"
               >
                 <h3 className="text-lg font-semibold text-white mb-3">{faq.question}</h3>
                 <p className="text-gray-300">{faq.answer}</p>

@@ -12,6 +12,9 @@ interface ServiceProviderType {
   rating: number | null;
   location: string;
   city: string;
+  phone?: string;
+  bio?: string;
+  isVerified?: boolean;
 }
 
 interface ServicePageProps {

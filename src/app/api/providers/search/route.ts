@@ -18,8 +18,7 @@ export async function GET(request: Request) {
       where: {
         serviceType: type,
         city: {
-          contains: city,
-          mode: 'insensitive'
+          contains: city
         }
       },
       select: {
@@ -28,7 +27,10 @@ export async function GET(request: Request) {
         experience: true,
         rating: true,
         location: true,
-        city: true
+        city: true,
+        phone: true,
+        bio: true,
+        isVerified: true
       }
     });
 

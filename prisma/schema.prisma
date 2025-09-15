@@ -1,8 +1,5 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
 generator client {
-  provider = "prisma-client-js"
+  provider   = "prisma-client-js"
   engineType = "binary"
 }
 
@@ -12,49 +9,46 @@ datasource db {
 }
 
 model User {
-  id        String   @id @default(cuid())
+  id        String    @id @default(cuid())
   name      String
-  email     String   @unique
+  email     String    @unique
   password  String
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-
-  bookings Booking[]
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  bookings  Booking[]
 }
 
 model ServiceProvider {
-  id          String   @id @default(cuid())
+  id          String    @id @default(cuid())
   name        String
-  email       String   @unique
+  email       String    @unique
   password    String
   phone       String
   age         Int
   experience  Int
-  serviceType String   // "plumber", "electrician", "carpenter"
+  serviceType String
   location    String
   city        String
   address     String
-  isVerified  Boolean  @default(false)
+  isVerified  Boolean   @default(false)
   rating      Float?
   bio         String?
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
-
-  bookings Booking[]
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+  bookings    Booking[]
 }
 
 model Booking {
-  id                String         @id @default(cuid())
+  id                String          @id @default(cuid())
   userId            String
   serviceProviderId String
-  serviceType       String         // "plumber", "electrician", "carpenter"
+  serviceType       String
   description       String
   address           String
-  status            String         @default("pending") // "pending", "confirmed", "completed", "cancelled"
+  status            String          @default("pending")
   scheduledAt       DateTime?
-  createdAt         DateTime       @default(now())
-  updatedAt         DateTime       @updatedAt
-
-  user            User            @relation(fields: [userId], references: [id], onDelete: Cascade)
-  serviceProvider ServiceProvider @relation(fields: [serviceProviderId], references: [id], onDelete: Cascade)
+  createdAt         DateTime        @default(now())
+  updatedAt         DateTime        @updatedAt
+  serviceProvider   ServiceProvider @relation(fields: [serviceProviderId], references: [id], onDelete: Cascade)
+  user              User            @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
