@@ -21,13 +21,13 @@ export function CharacterAvatar({ href, imgSrc, hoverSrc, title }: CharacterAvat
         transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
         className="flex flex-col items-center"
       >
-        <div className="relative w-56 h-[30rem] md:w-72 md:h-[36rem] overflow-hidden">
+        <div className="relative w-40 h-64 md:w-56 md:h-[30rem] lg:w-72 lg:h-[36rem] overflow-hidden">
           {/* Base (neutral) image */}
           <Image
             src={imgSrc}
             alt={title}
             fill
-            sizes="(max-width: 768px) 224px, 288px"
+            sizes="(max-width: 640px) 160px, (max-width: 1024px) 224px, 288px"
             className={`object-cover ${hoverSrc ? "opacity-100 group-hover:opacity-0" : "opacity-100"}`}
             priority
           />
@@ -37,7 +37,7 @@ export function CharacterAvatar({ href, imgSrc, hoverSrc, title }: CharacterAvat
               src={hoverSrc}
               alt={`${title} hover`}
               fill
-              sizes="(max-width: 768px) 224px, 288px"
+              sizes="(max-width: 640px) 160px, (max-width: 1024px) 224px, 288px"
               className="object-cover opacity-0 group-hover:opacity-100"
               priority
             />

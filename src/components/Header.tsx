@@ -12,6 +12,7 @@ export function Header() {
   const { t } = useI18n();
   const { data: session, status } = useSession();
   const [showDropdown, setShowDropdown] = useState(false);
+  const [mobileOpen, setMobileOpen] = useState(false);
 
   const handleSignOut = async () => {
     setShowDropdown(false);
@@ -20,7 +21,7 @@ export function Header() {
 
   return (
     <header className="sticky top-0 z-40 backdrop-blur border-b border-black/5 dark:border-white/10 bg-white/60 dark:bg-black/30">
-      <div className="w-full px-16 py-3 grid grid-cols-[1fr_auto_1fr] items-center">
+      <div className="w-full px-4 sm:px-8 md:px-16 py-3 grid grid-cols-2 sm:grid-cols-[1fr_auto_1fr] items-center">
         <div className="justify-self-start">
           <Link href="/" className="flex items-center">
             <Image
@@ -38,7 +39,7 @@ export function Header() {
           <Link href="/contact" className="hover:opacity-80 transition-opacity">{t("nav_contact")}</Link>
           <Link href="/join" className="hover:opacity-80 transition-opacity">{t("nav_join")}</Link>
         </nav>
-        <div className="flex items-center gap-3 justify-self-end">
+        <div className="hidden sm:flex items-center gap-3 justify-self-end">
           <LanguageSwitcher />
           {status === "loading" ? (
             <div className="w-8 h-8 bg-gray-200 rounded-full animate-pulse" />
@@ -84,7 +85,54 @@ export function Header() {
             </a>
           )}
         </div>
+        {/* Mobile actions */}
+        <div className="flex sm:hidden items-center justify-end gap-2">
+          <LanguageSwitcher />
+          <button
+            aria-label="Toggle navigation menu"
+            aria-expanded={mobileOpen}
+            aria-controls="mobile-nav"
+            onClick={() => setMobileOpen((v) => !v)}
+            className="inline-flex items-center justify-center rounded-md border border-black/10 dark:border-white/15 p-2 bg-white/80 dark:bg-black/40 hover:bg-white dark:hover:bg-white/10 transition"
+          >
+            {/* Simple hamburger icon */}
+            <span className="block w-5 h-0.5 bg-black dark:bg-white mb-1" />
+            <span className="block w-5 h-0.5 bg-black dark:bg-white mb-1" />
+            <span className="block w-5 h-0.5 bg-black dark:bg-white" />
+          </button>
+        </div>
       </div>
+      {/* Mobile menu panel */}
+      {mobileOpen && (
+        <div id="mobile-nav" className="sm:hidden border-t border-black/5 dark:border-white/10 bg-white/95 dark:bg-black/80 backdrop-blur">
+          <div className="px-4 py-3 flex flex-col gap-2 text-sm">
+            <Link href="/about" className="py-2" onClick={() => setMobileOpen(false)}>{t("nav_about")}</Link>
+            <Link href="/contact" className="py-2" onClick={() => setMobileOpen(false)}>{t("nav_contact")}</Link>
+            <Link href="/join" className="py-2" onClick={() => setMobileOpen(false)}>{t("nav_join")}</Link>
+            <div className="pt-2 border-t border-black/5 dark:border-white/10 mt-1">
+              {status === "loading" ? (
+                <div className="w-8 h-8 bg-gray-200 rounded-full animate-pulse" />
+              ) : session?.user ? (
+                <>
+                  <Link href="/dashboard" className="py-2 flex items-center gap-2" onClick={() => setMobileOpen(false)}>
+                    <User className="w-4 h-4" />
+                    Dashboard
+                  </Link>
+                  <button onClick={async () => { setMobileOpen(false); await signOut({ callbackUrl: "/" }); }} className="py-2 flex items-center gap-2">
+                    <LogOut className="w-4 h-4" />
+                    Sign out
+                  </button>
+                </>
+              ) : (
+                <a href="/auth" onClick={() => setMobileOpen(false)} className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-black text-white hover:opacity-90">
+                  <User className="h-4 w-4" />
+                  {t('signIn')}
+                </a>
+              )}
+            </div>
+          </div>
+        </div>
+      )}
     </header>
   );
 }

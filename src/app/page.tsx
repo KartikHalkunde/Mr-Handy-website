@@ -26,11 +26,11 @@ export default function Home() {
           initial={{ opacity: 0, y: 8 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
-          className="text-5xl md:text-6xl font-semibold tracking-tight"
+          className="text-4xl sm:text-5xl md:text-6xl font-semibold tracking-tight"
         >
           <TypewriterEffect 
             words={["Carpentry", "Plumbing", "Electrical work", "Mr. Handy"]}
-            className="text-5xl md:text-6xl font-semibold tracking-tight"
+            className="text-4xl sm:text-5xl md:text-6xl font-semibold tracking-tight"
             startAnimation={startTypewriter}
           />
         </motion.h1>
@@ -45,7 +45,7 @@ export default function Home() {
       </div>
 
       <div className="mt-8 md:mt-10 flex items-stretch justify-center">
-        <div className="flex">
+        <div className="flex flex-wrap gap-4 sm:gap-6 justify-center">
         <CharacterAvatar
           href="/plumber"
           imgSrc="/plumber_default.png"
