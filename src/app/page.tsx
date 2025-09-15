@@ -45,7 +45,7 @@ export default function Home() {
       </div>
 
       <div className="mt-8 md:mt-10 flex items-stretch justify-center">
-        <div className="flex flex-wrap gap-4 sm:gap-6 justify-center">
+        <div className="flex flex-wrap gap-0 justify-center">
         <CharacterAvatar
           href="/plumber"
           imgSrc="/plumber_default.png"

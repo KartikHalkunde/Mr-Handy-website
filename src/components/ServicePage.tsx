@@ -49,11 +49,11 @@ export function ServicePage({ serviceType, title, description }: ServicePageProp
   if (!session) {
     return (
       <div className="min-h-[60vh] flex flex-col items-center justify-center text-center px-4">
-        <h1 className="text-4xl font-bold mb-4">{title}</h1>
-        <p className="text-xl mb-8">Please sign in to find and connect with {serviceType}s in your area.</p>
+        <h1 className="text-4xl font-bold mb-2">{title}</h1>
+        <p className="text-base sm:text-lg opacity-80 max-w-2xl">Please sign in to find and connect with {serviceType}s in your area.</p>
         <Link 
           href={`/auth?callbackUrl=${encodeURIComponent(`/${serviceType}`)}`}
-          className="inline-flex items-center gap-2 px-6 py-3.5 rounded-2xl bg-white/10 hover:bg-white/20 backdrop-blur-sm border border-white/20 text-white transition-all"
+          className="mt-6 inline-flex items-center gap-2 px-6 py-3.5 rounded-xl bg-white text-black hover:opacity-90 transition"
         >
           Sign In to Continue
         </Link>
@@ -62,16 +62,16 @@ export function ServicePage({ serviceType, title, description }: ServicePageProp
   }
 
   return (
-    <div className="min-h-[60vh] py-8 px-4">
-      <div className="max-w-4xl mx-auto">
-        <h1 className="text-4xl font-bold mb-4">{title}</h1>
-        <p className="text-xl mb-8">{description}</p>
-        
-        <div className="form-control w-full max-w-md mx-auto mb-8">
-          <label className="label">
-            <span className="label-text">Enter your city</span>
-          </label>
-          <div className="flex gap-2">
+    <div className="min-h-[60vh] py-8 px-2 sm:px-4">
+      <div className="max-w-5xl mx-auto">
+        <div className="mb-6 sm:mb-8">
+          <h1 className="text-3xl sm:text-4xl font-bold">{title}</h1>
+          <p className="mt-2 text-base sm:text-lg opacity-80 max-w-3xl">{description}</p>
+        </div>
+
+        <div className="w-full max-w-2xl mx-auto mb-8">
+          <label className="block mb-2 text-sm font-medium opacity-80">Enter your city</label>
+          <div className="flex flex-col sm:flex-row gap-2">
             <input
               type="text"
               placeholder="Enter city name"
@@ -80,13 +80,14 @@ export function ServicePage({ serviceType, title, description }: ServicePageProp
               onChange={(e) => setCity(e.target.value)}
             />
             <button 
-              className="btn btn-primary"
+              className="btn btn-primary w-full sm:w-auto"
               onClick={handleSearch}
               disabled={loading || !city}
             >
               {loading ? 'Searching...' : 'Search'}
             </button>
           </div>
+          <p className="mt-2 text-xs opacity-70">Tip: Try your nearest major city for more results.</p>
         </div>
 
         {providers.length > 0 ? (
@@ -96,7 +97,7 @@ export function ServicePage({ serviceType, title, description }: ServicePageProp
             ))}
           </div>
         ) : (
-          <div className="text-center text-gray-600">
+          <div className="rounded-xl border border-white/10 bg-white/5 p-6 text-center opacity-90">
             {city && !loading ? (
               <p>No {serviceType}s found in {city}. Try another city or check back later.</p>
             ) : (

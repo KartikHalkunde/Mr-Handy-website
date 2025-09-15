@@ -78,7 +78,7 @@ export function Header() {
           ) : (
             <a
               href="/auth"
-              className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-white hover:bg-gray-100 backdrop-blur-sm border border-white/20 text-black transition-all"
+              className="inline-flex items-center gap-2 px-3.5 py-2 rounded-lg border border-black/10 bg-white text-black hover:bg-white transition"
             >
               <User className="h-4 w-4" />
               {t('signIn')}
@@ -124,7 +124,7 @@ export function Header() {
                   </button>
                 </>
               ) : (
-                <a href="/auth" onClick={() => setMobileOpen(false)} className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-black text-white hover:opacity-90">
+                <a href="/auth" onClick={() => setMobileOpen(false)} className="inline-flex items-center gap-2 px-3.5 py-2 rounded-lg border border-black/10 bg-white text-black hover:bg-white transition">
                   <User className="h-4 w-4" />
                   {t('signIn')}
                 </a>

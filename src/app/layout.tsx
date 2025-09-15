@@ -32,7 +32,9 @@ export default function RootLayout({
           <LanguageProvider>
             <Header />
             <PageTransition>
-              {children}
+              <main className="mx-auto w-full px-3 sm:px-4 md:px-6 lg:px-8 xl:px-10 max-w-[1280px]">
+                {children}
+              </main>
             </PageTransition>
             <Footer />
           </LanguageProvider>

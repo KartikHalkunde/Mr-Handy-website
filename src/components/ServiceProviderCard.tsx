@@ -20,55 +20,39 @@ export function ServiceProviderCard({ provider }: ServiceProviderCardProps) {
   const { name, experience, rating, location, city, phone, bio, isVerified } = provider;
 
   return (
-    <div className="card bg-base-100 shadow-xl">
-      <div className="card-body">
-        <div className="flex items-center justify-between">
-          <h2 className="card-title">{name}</h2>
-          {isVerified && (
-            <div className="badge badge-success">Verified</div>
-          )}
+    <div className="rounded-xl border border-white/10 bg-white/5 p-5">
+      <div className="flex items-start justify-between gap-3">
+        <div>
+          <h3 className="text-lg font-semibold">{name}</h3>
+          <p className="text-sm opacity-80 mt-0.5">{location}, {city}</p>
         </div>
-        
-        <p className="text-sm">
-          <span className="font-semibold">Experience:</span> {experience} years
-        </p>
-        
-        {rating && (
-          <p className="text-sm">
-            <span className="font-semibold">Rating:</span> {rating.toFixed(1)} / 5.0
-          </p>
+        {isVerified && (
+          <span className="inline-flex items-center rounded-md bg-green-600/20 text-green-300 px-2 py-1 text-xs">Verified</span>
         )}
-        
-        <p className="text-sm">
-          <span className="font-semibold">Location:</span> {location}, {city}
-        </p>
-        
+      </div>
+
+      <div className="mt-3 grid grid-cols-2 gap-3 text-sm">
+        <div>
+          <span className="opacity-70">Experience</span>
+          <div className="font-medium">{experience} yrs</div>
+        </div>
+        {typeof rating === 'number' && (
+          <div>
+            <span className="opacity-70">Rating</span>
+            <div className="font-medium">{rating.toFixed(1)} / 5.0</div>
+          </div>
+        )}
+      </div>
+
+      {bio && (
+        <p className="mt-3 text-sm opacity-80">{bio}</p>
+      )}
+
+      <div className="mt-5 flex items-center justify-end gap-2">
         {phone && (
-          <p className="text-sm">
-            <span className="font-semibold">Phone:</span> 
-            <a href={`tel:${phone}`} className="text-blue-600 hover:text-blue-800 ml-1">
-              {phone}
-            </a>
-          </p>
+          <a href={`tel:${phone}`} className="inline-flex items-center px-3 py-2 rounded-lg bg-white text-black text-sm hover:opacity-90">Call</a>
         )}
-        
-        {bio && (
-          <p className="text-sm text-gray-600 mt-2">
-            {bio}
-          </p>
-        )}
-        
-        <div className="card-actions justify-end mt-4">
-          {phone && (
-            <a 
-              href={`tel:${phone}`}
-              className="btn btn-primary btn-sm"
-            >
-              Call Now
-            </a>
-          )}
-          <button className="btn btn-outline btn-sm">Book Service</button>
-        </div>
+        <button className="inline-flex items-center px-3 py-2 rounded-lg border border-white/15 text-sm hover:bg-white/5">Book Service</button>
       </div>
     </div>
   );
