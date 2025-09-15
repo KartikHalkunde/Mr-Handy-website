@@ -3,7 +3,7 @@
 import { useI18n } from "@/components/LanguageProvider";
 import { motion } from "framer-motion";
 import { useState } from "react";
-import { Mail, Phone, MapPin, Clock, Send, CheckCircle } from "lucide-react";
+import { Mail, Phone, MapPin, Send, CheckCircle } from "lucide-react";
 
 export default function ContactPage() {
   const { t } = useI18n();
@@ -154,7 +154,7 @@ export default function ContactPage() {
                 >
                   <CheckCircle className="w-16 h-16 text-[#FFC107] mx-auto mb-4" />
                   <h3 className="text-2xl font-semibold text-white mb-2">Message Sent!</h3>
-                  <p className="text-gray-300">We'll get back to you within 24 hours.</p>
+                  <p className="text-gray-300">We&apos;ll get back to you within 24 hours.</p>
                 </motion.div>
               ) : (
                 <form onSubmit={handleSubmit} className="space-y-6">

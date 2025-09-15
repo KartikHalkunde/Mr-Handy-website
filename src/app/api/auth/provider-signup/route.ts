@@ -37,7 +37,7 @@ export async function POST(req: Request) {
     const hashedPassword = await hash(password, 10);
 
     // Create service provider
-    const serviceProvider = await prisma.serviceProvider.create({
+    await prisma.serviceProvider.create({
       data: {
         name,
         email,

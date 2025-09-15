@@ -13,7 +13,7 @@ const springTransition: Transition = {
 };
 
 function AuthPageContent() {
-  const [mounted, setMounted] = useState(false);
+  // Removed unused variable 'mounted'
   const [isSignUp, setIsSignUp] = useState(false);
   const [formData, setFormData] = useState({
     name: '',
@@ -30,10 +30,7 @@ function AuthPageContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
 
-  useEffect(() => {
-    setMounted(true);
-    return () => setMounted(false);
-  }, []);
+  // Removed useEffect for setMounted
 
   // Get redirect URL from query params
   useEffect(() => {
@@ -126,7 +123,7 @@ function AuthPageContent() {
           }
         }
       }
-    } catch (error) {
+    } catch {
       setErrors({ general: 'Something went wrong. Please try again.' });
     } finally {
       setLoading(false);

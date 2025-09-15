@@ -165,7 +165,7 @@ function LoginFormContent() {
         {/* Signup Link */}
         <div className="text-center">
           <p className="text-gray-300">
-            Don't have an account?{' '}
+            Don&apos;t have an account?{' '}
             <AuthLink href="/signup">
               Create Account
             </AuthLink>

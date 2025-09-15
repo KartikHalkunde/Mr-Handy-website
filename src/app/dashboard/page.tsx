@@ -121,7 +121,7 @@ export default function DashboardPage() {
       } else {
         setMessage(data.error || 'Failed to update profile');
       }
-    } catch (error) {
+    } catch {
       setMessage('Network error. Please try again.');
     } finally {
       setUpdateLoading(false);

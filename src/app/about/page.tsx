@@ -5,7 +5,7 @@ import { motion } from "framer-motion";
 import Image from "next/image";
 
 export default function AboutPage() {
-  const { t } = useI18n();
+  // Removed unused variable 't'
   
   return (
     <div className="min-h-screen" style={{ backgroundColor: '#121312' }}>
@@ -51,7 +51,7 @@ export default function AboutPage() {
             </h2>
             <div className="max-w-4xl">
               <p className="text-lg md:text-xl text-gray-300 leading-relaxed mb-6">
-                We provide connections to your nearest handymen for free, so there's no hassle contacting 
+                We provide connections to your nearest handymen for free, so there&apos;s no hassle contacting 
                 multiple people to get in contact to fix the tap or fix the door. Get handymen contacts 
                 one click away.
               </p>

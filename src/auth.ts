@@ -1,6 +1,6 @@
 import NextAuth from "next-auth";
 import type { NextAuthConfig } from "next-auth";
-import type { JWT } from "next-auth/jwt";
+// import type { JWT } from "next-auth/jwt"; // Removed unused import
 import CredentialsProvider from "next-auth/providers/credentials";
 import { compare } from "bcryptjs";
 import { prisma } from "@/lib/prisma";

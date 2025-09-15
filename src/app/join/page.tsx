@@ -65,7 +65,7 @@ export default function JoinPage() {
         setMessage(data.error || "Registration failed. Please try again.");
         setIsSuccess(false);
       }
-    } catch (error) {
+    } catch {
       setMessage("Network error. Please check your connection and try again.");
       setIsSuccess(false);
     } finally {
