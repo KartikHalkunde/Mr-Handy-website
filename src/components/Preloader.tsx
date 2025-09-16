@@ -52,7 +52,7 @@ export function Preloader() {
     >
       <div className="relative preloader-enter">
         {/* Video Container */}
-        <div className="relative w-52 h-26 md:w-60 md:h-30">
+        <div className="relative w-40 h-24 sm:w-52 sm:h-26 md:w-60 md:h-30">
           <video
             ref={videoRef}
             autoPlay

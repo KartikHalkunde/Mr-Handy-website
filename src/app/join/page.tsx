@@ -104,10 +104,10 @@ export default function JoinPage() {
         </video>
       </div>
 
-      <div className="relative z-10 w-full max-w-4xl mx-6">
-        <div className="flex h-[85vh] backdrop-blur-3xl bg-white/5 rounded-[32px] shadow-2xl border border-white/20 overflow-hidden">
+      <div className="relative z-10 w-full max-w-4xl mx-3 sm:mx-6">
+        <div className="flex flex-col md:flex-row h-[85vh] md:h-[85vh] backdrop-blur-3xl bg-white/5 rounded-[24px] md:rounded-[32px] shadow-2xl border border-white/20 overflow-hidden">
           {/* Left Image Section */}
-          <div className="w-1/3 relative">
+          <div className="w-full md:w-1/3 relative h-48 md:h-auto">
             <div className="h-full bg-gradient-to-b from-green-600 to-green-400 relative overflow-hidden">
               {/* Background Image - using a placeholder for now */}
               <div className="absolute inset-0 bg-gray-300 flex items-center justify-center">
@@ -132,7 +132,7 @@ export default function JoinPage() {
           </div>
 
           {/* Right Form Section */}
-          <div className="w-2/3 p-8 flex flex-col">
+          <div className="w-full md:w-2/3 p-5 sm:p-8 flex flex-col">
             <div className="flex-1 flex flex-col justify-center">
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
@@ -158,7 +158,7 @@ export default function JoinPage() {
                 
                 <form onSubmit={handleSubmit} className="space-y-4">
                   {/* Personal Information Section */}
-                  <div className="grid grid-cols-2 gap-4">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <motion.div
                       initial={{ opacity: 0, x: -20 }}
                       animate={{ opacity: 1, x: 0 }}
@@ -192,7 +192,7 @@ export default function JoinPage() {
                     </motion.div>
                   </div>
 
-                  <div className="grid grid-cols-2 gap-4">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <motion.div
                       initial={{ opacity: 0, x: -20 }}
                       animate={{ opacity: 1, x: 0 }}
@@ -225,7 +225,7 @@ export default function JoinPage() {
                     </motion.div>
                   </div>
 
-                  <div className="grid grid-cols-2 gap-4">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <motion.div
                       initial={{ opacity: 0, x: -20 }}
                       animate={{ opacity: 1, x: 0 }}
@@ -318,7 +318,7 @@ export default function JoinPage() {
 
                   {/* Action Buttons */}
                   <motion.div 
-                    className="flex gap-4 pt-6"
+                    className="flex flex-col sm:flex-row gap-3 sm:gap-4 pt-6"
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: 1.0 }}

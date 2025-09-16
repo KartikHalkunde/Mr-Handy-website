@@ -1,24 +1,34 @@
 import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
-import { auth } from './auth';
 
-export default async function middleware(request: NextRequest) {
-  const session = await auth();
-  const protectedPaths = ['/dashboard'];
-  const authPaths = ['/login', '/signup'];
+/**
+ * Lightweight middleware to avoid large Edge bundle sizes.
+ * Determines auth status via NextAuth session cookie presence only.
+ */
+export default function middleware(request: NextRequest) {
   const path = request.nextUrl.pathname;
 
-  // Check if the path is protected
-  if (protectedPaths.some(pp => path.startsWith(pp))) {
-    if (!session) {
+  // NextAuth session cookie names (http vs https)
+  const sessionToken =
+    request.cookies.get('next-auth.session-token')?.value ||
+    request.cookies.get('__Secure-next-auth.session-token')?.value;
+
+  const isAuthenticated = Boolean(sessionToken);
+
+  const protectedPaths = ['/dashboard'];
+  const authPaths = ['/login', '/signup', '/auth'];
+
+  // Protect private routes
+  if (protectedPaths.some((pp) => path.startsWith(pp))) {
+    if (!isAuthenticated) {
       const url = new URL('/login', request.url);
       url.searchParams.set('callbackUrl', encodeURI(request.url));
       return NextResponse.redirect(url);
     }
   }
 
-  // Redirect authenticated users away from auth pages
-  if (session && authPaths.some(ap => path.startsWith(ap))) {
+  // Prevent navigating to auth pages when already authenticated
+  if (isAuthenticated && authPaths.some((ap) => path.startsWith(ap))) {
     return NextResponse.redirect(new URL('/dashboard', request.url));
   }
 

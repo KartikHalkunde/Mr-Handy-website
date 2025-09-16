@@ -21,7 +21,7 @@ export function CharacterAvatar({ href, imgSrc, hoverSrc, title }: CharacterAvat
         transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
         className="flex flex-col items-center"
       >
-        <div className="relative w-40 h-64 md:w-56 md:h-[30rem] lg:w-72 lg:h-[36rem] overflow-hidden">
+        <div className="relative w-36 h-56 sm:w-40 sm:h-64 md:w-56 md:h-[30rem] lg:w-72 lg:h-[36rem] overflow-hidden">
           {/* Base (neutral) image */}
           <Image
             src={imgSrc}

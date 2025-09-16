@@ -45,7 +45,7 @@ export default function Home() {
       </div>
 
       <div className="mt-8 md:mt-10 flex items-stretch justify-center">
-        <div className="flex flex-wrap gap-0 justify-center">
+        <div className="flex gap-0 justify-center sm:flex-wrap md:flex-nowrap overflow-x-auto sm:overflow-visible [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
         <CharacterAvatar
           href="/plumber"
           imgSrc="/plumber_default.png"
