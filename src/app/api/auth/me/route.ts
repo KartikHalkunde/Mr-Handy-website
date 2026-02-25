@@ -1,29 +1,21 @@
 import { NextResponse } from 'next/server';
 import { prisma } from '@/lib/prisma';
-import { verifyToken, getAuthCookie } from '@/lib/auth';
+import { auth } from '@/auth';
 
 export async function GET() {
   try {
-    const token = await getAuthCookie();
-    
-    if (!token) {
+    const session = await auth();
+
+    if (!session?.user?.id) {
       return NextResponse.json(
         { success: false, message: 'Not authenticated' },
         { status: 401 }
       );
     }
 
-    const payload = verifyToken(token);
-    if (!payload) {
-      return NextResponse.json(
-        { success: false, message: 'Invalid token' },
-        { status: 401 }
-      );
-    }
-
     // Fetch user from database
     const user = await prisma.user.findUnique({
-      where: { id: payload.userId },
+      where: { id: session.user.id },
       select: {
         id: true,
         name: true,

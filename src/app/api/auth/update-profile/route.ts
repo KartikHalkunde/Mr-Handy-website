@@ -1,22 +1,14 @@
 import { NextResponse } from 'next/server';
 import { prisma } from '@/lib/prisma';
-import { verifyToken, getAuthCookie } from '@/lib/auth';
+import { auth } from '@/auth';
 
 export async function PUT(request: Request) {
   try {
-    const token = await getAuthCookie();
-    
-    if (!token) {
+    const session = await auth();
+
+    if (!session?.user?.id) {
       return NextResponse.json(
         { error: 'Unauthorized' },
-        { status: 401 }
-      );
-    }
-
-    const payload = verifyToken(token);
-    if (!payload) {
-      return NextResponse.json(
-        { error: 'Invalid token' },
         { status: 401 }
       );
     }
@@ -36,7 +28,7 @@ export async function PUT(request: Request) {
     const existingUser = await prisma.user.findFirst({
       where: {
         email: email.toLowerCase(),
-        id: { not: payload.userId }
+        id: { not: session.user.id }
       }
     });
 
@@ -49,7 +41,7 @@ export async function PUT(request: Request) {
 
     // Update user profile
     const updatedUser = await prisma.user.update({
-      where: { id: payload.userId },
+      where: { id: session.user.id },
       data: {
         name: name.trim(),
         email: email.toLowerCase(),

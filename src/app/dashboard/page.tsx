@@ -6,6 +6,7 @@ import { motion } from 'framer-motion';
 import { LogOut, User, Calendar, Settings, Wrench, Edit, Save, X } from 'lucide-react';
 import { AuthButton } from '@/components/auth/AuthButton';
 import { useI18n } from '@/components/LanguageProvider';
+import { signOut } from 'next-auth/react';
 
 interface User {
   id: string;
@@ -60,14 +61,7 @@ export default function DashboardPage() {
     setLogoutLoading(true);
     
     try {
-      const response = await fetch('/api/auth/logout', {
-        method: 'POST',
-      });
-
-      if (response.ok) {
-        // Redirect to home page
-        router.push('/');
-      }
+      await signOut({ callbackUrl: '/' });
     } catch (error) {
       console.error('Logout failed:', error);
     } finally {
